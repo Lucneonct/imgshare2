@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const { Schema } = mongoose;
+const mongooseLeanVirtuals = require('mongoose-lean-virtuals');
 const path = require('path')
 
 const ImageSchema = new Schema({
@@ -11,9 +12,14 @@ const ImageSchema = new Schema({
     timestamp: { type: Date, default: Date.now }
 });
 
-ImageSchema.virtual('uniqueId')
-    .get(function() {
-        return this.filename.replace(path.extname(this.filename), '');
-    })
+ImageSchema.set('toJSON', { virtuals: true })
+ImageSchema.set('toObject', { virtuals: true })
 
+
+ImageSchema.virtual('uniqueId')
+.get(function() {
+    return this.filename.replace(path.extname(this.filename), '');
+})
+
+ImageSchema.plugin(mongooseLeanVirtuals);
 module.exports = mongoose.model('Image', ImageSchema);

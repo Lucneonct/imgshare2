@@ -12,13 +12,14 @@
   "dependencies": {
     "errorhandler": "^1.5.1",
     "express": "^4.17.1",
-    "express-handlebars": "^3.1.0",
+    "express-handlebars": "^6.0.6",
     "fs-extra": "^8.1.0",
     "md5": "^2.2.1",
     "moment": "^2.24.0",
     "mongoose": "^5.8.1",
+    "mongoose-lean-virtuals": "^0.9.1",
     "morgan": "^1.9.1",
-    "multer": "^1.4.2"
+    "multer": "^1.4.5-lts.1"
   },
   "devDependencies": {
     "nodemon": "^2.0.2"

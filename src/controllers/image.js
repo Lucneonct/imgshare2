@@ -11,16 +11,15 @@ const ctrl = {};
 ctrl.index = async (req, res) => {
     let viewModel = {image: {}, comments: {}}
     let id = req.params.image_id;
-    const image = await Image.findOne({filename: { $regex: id }});
+    const image = await Image.findOne({filename: { $regex: id }}).lean({ virtuals: true});
     
     if(id.length !== 10) {
         res.redirect('/')
     } else if(image) {
-        image.views++;
-        viewModel.image = image;
         viewmodel = await sidebar(viewModel);
-        await image.save()
-        const comments = await Comment.find({image_id: image._id});
+        viewModel.image = image;
+        await Image.findOneAndUpdate({ _id: image.id }, { $inc: { views: 1 } })
+        const comments = await Comment.find({image_id: image._id}).lean();
         viewModel.comments = comments;
         res.render('images', viewModel);
     } else {

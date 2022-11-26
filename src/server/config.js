@@ -1,5 +1,5 @@
 const path = require('path')
-const exphbs = require('express-handlebars');
+const { engine } = require('express-handlebars');
 const express = require('express');
 const morgan = require('morgan');
 const multer = require('multer');
@@ -9,10 +9,10 @@ const errorHandler = require('errorhandler')
 module.exports = app => {
 
     // Settings
-    app.set('port', process.env.port || 80);
+    app.set('port', process.env.port || 3000);
     app.set('views', path.join(__dirname, '../views'));
-    app.engine('.hbs', exphbs({
-        defaultLayour: 'main',
+    app.engine('.hbs', engine({
+        defaultLayout: 'main',
         partialsDir: path.join(app.get('views'), 'partials'),
         layoutsDir: path.join(app.get('views'), 'layouts'),
         extname: '.hbs',
